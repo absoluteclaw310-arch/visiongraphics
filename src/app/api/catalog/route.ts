@@ -6,7 +6,7 @@ export async function GET() {
     const response = await squareClient.catalogApi.listCatalog();
     
     // Extract items from the catalog response
-    const items = response.result.objects?.filter(obj => obj.type === 'ITEM') || [];
+    const items = response.result.objects?.filter((obj: any) => obj.type === 'ITEM') || [];
     
     return NextResponse.json({ items });
   } catch (error) {
