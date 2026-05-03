@@ -5,6 +5,8 @@ if (!process.env.SQUARE_ACCESS_TOKEN) {
 }
 
 export const squareClient = new Client({
-  accessToken: process.env.SQUARE_ACCESS_TOKEN || '',
+  bearerAuthCredentials: {
+    accessToken: process.env.SQUARE_ACCESS_TOKEN || ''
+  },
   environment: Environment.Production, // Make sure to use Production since you provided production keys
 });

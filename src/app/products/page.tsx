@@ -44,7 +44,8 @@ export default async function ProductsPage() {
           </div>
         ) : (
           <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {items.map((item: any) => {
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+            {items.map((item: { id: string; itemData?: any }) => {
               const itemData = item.itemData;
               const priceMoney = itemData?.variations?.[0]?.itemVariationData?.priceMoney;
               const price = priceMoney ? (Number(priceMoney.amount) / 100).toFixed(2) : 'N/A';

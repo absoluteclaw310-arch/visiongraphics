@@ -6,6 +6,7 @@ export async function GET() {
     const response = await squareClient.catalogApi.listCatalog();
     
     // Extract items from the catalog response
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const items = response.result.objects?.filter((obj: any) => obj.type === 'ITEM') || [];
     
     return NextResponse.json({ items });
