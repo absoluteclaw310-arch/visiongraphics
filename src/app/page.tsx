@@ -15,7 +15,7 @@ export default function Home() {
 
       {/* Hero Section */}
       <header className="py-20 px-6 text-center bg-gradient-to-r from-blue-600 to-blue-800 text-white">
-        <h1 className="text-4xl md:text-6xl font-extrabold mb-4 font-primary">Upstate NY Sign Supply Distribution</h1>
+        <h1 className="text-4xl md:text-6xl font-extrabold mb-4 font-primary">Upstate NY's Sign Supply Distribution</h1>
         <h2 className="text-2xl md:text-3xl font-semibold mb-6 font-secondary text-blue-100">Capital District's Sign Supplier</h2>
         <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto opacity-90">
           Serving the industry for over 50 years. Wholesale pricing on high-quality materials for professionals.
