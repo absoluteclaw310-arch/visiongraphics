@@ -2,10 +2,10 @@ import React from 'react';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900 font-sans">
+    <div className="min-h-screen bg-gray-50 text-gray-900 font-secondary">
       {/* Navigation */}
       <nav className="bg-white shadow-sm border-b py-4 px-6 flex justify-between items-center">
-        <div className="text-2xl font-bold text-blue-700">Vision Graphics</div>
+        <div className="text-2xl font-bold text-blue-700 font-primary">Vision Graphics</div>
         <div className="space-x-6 hidden md:flex">
           <a href="#products" className="hover:text-blue-600 transition">Products</a>
           <a href="#about" className="hover:text-blue-600 transition">About</a>
@@ -15,7 +15,7 @@ export default function Home() {
 
       {/* Hero Section */}
       <header className="py-20 px-6 text-center bg-gradient-to-r from-blue-600 to-blue-800 text-white">
-        <h1 className="text-4xl md:text-6xl font-extrabold mb-4">Premium Sign Supply Distribution</h1>
+        <h1 className="text-4xl md:text-6xl font-extrabold mb-4 font-primary">Premium Sign Supply Distribution</h1>
         <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto opacity-90">
           Serving the industry for over 50 years. Wholesale pricing on high-quality materials for professionals.
         </p>
@@ -31,28 +31,28 @@ export default function Home() {
 
       {/* Features/Services */}
       <section id="products" className="py-16 px-6 max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-12">Our Product Range</h2>
+        <h2 className="text-3xl font-bold text-center mb-12 font-primary">Our Product Range</h2>
         <div className="grid md:grid-cols-3 gap-8">
           {[
             { 
               title: "Vinyl & Films", 
               desc: "High-grade die-cut vinyl and specialty films for every application.",
-              icon: "🎨" 
+              icon: "" 
             },
             { 
               title: "Print Materials", 
               desc: "UV, Solvent, and Eco-Solvent compatible media for crisp, durable prints.",
-              icon: "🖨️" 
+              icon: "" 
             },
             { 
               title: "Application Tools", 
               desc: "Transfer tapes, squeegees, and precision tools for a professional finish.",
-              icon: "🛠️" 
+              icon: "" 
             }
           ].map((item, idx) => (
             <div key={idx} className="p-6 bg-white rounded-xl shadow-md border hover:border-blue-400 transition">
-              <div className="text-4xl mb-4">{item.icon}</div>
-              <h3 className="text-xl font-bold mb-2">{item.title}</h3>
+              {item.icon && <div className="text-4xl mb-4">{item.icon}</div>}
+              <h3 className="text-xl font-bold mb-2 font-primary">{item.title}</h3>
               <p className="text-gray-600">{item.desc}</p>
             </div>
           ))}
@@ -62,7 +62,7 @@ export default function Home() {
       {/* Special Offer Section */}
       <section className="bg-blue-50 py-12 px-6 text-center border-y border-blue-100">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl font-bold text-blue-800 mb-4">🚚 Free Delivery!</h2>
+          <h2 className="text-2xl font-bold text-blue-800 mb-4 font-primary">Free Delivery!</h2>
           <p className="text-lg text-blue-700">
             We provide <strong>free delivery in the capital district</strong> for qualified wholesale accounts.
           </p>
@@ -71,7 +71,7 @@ export default function Home() {
 
       {/* About Section */}
       <section id="about" className="py-16 px-6 max-w-4xl mx-auto text-center">
-        <h2 className="text-3xl font-bold mb-6">50+ Years of Excellence</h2>
+        <h2 className="text-3xl font-bold mb-6 font-primary">50+ Years of Excellence</h2>
         <p className="text-lg text-gray-600 leading-relaxed">
           Vision Graphics is a trusted local sign supply distribution warehouse. We specialize in providing
           wholesale pricing and unparalleled expertise to the sign-making community. From the smallest 
@@ -84,12 +84,12 @@ export default function Home() {
       <footer id="contact" className="bg-gray-900 text-white py-12 px-6">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
           <div>
-            <h2 className="text-2xl font-bold mb-4">Vision Graphics</h2>
+            <h2 className="text-2xl font-bold mb-4 font-primary">Vision Graphics</h2>
             <p className="text-gray-400 mb-4">Your one-stop shop for wholesale sign supplies.</p>
             <p className="text-gray-400">Serving the Capital District and beyond.</p>
           </div>
           <div className="text-left">
-            <h3 className="text-xl font-semibold mb-4">Contact Us</h3>
+            <h3 className="text-xl font-semibold mb-4 font-primary">Contact Us</h3>
             <p className="text-gray-400">Interested in a wholesale account?</p>
             <p className="text-lg font-medium mt-2">Email: info@visiongraphics.example</p>
             <p className="text-lg font-medium">Phone: (555) 123-4567</p>
