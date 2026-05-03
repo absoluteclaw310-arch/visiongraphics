@@ -1,0 +1,16 @@
+import { NextResponse } from 'next/server';
+import { squareClient } from '@/lib/square/client';
+
+export async function GET() {
+  try {
+    const response = await squareClient.catalogApi.listCatalog();
+    
+    // Extract items from the catalog response
+    const items = response.result.objects?.filter(obj => obj.type === 'ITEM') || [];
+    
+    return NextResponse.json({ items });
+  } catch (error) {
+    console.error('Error fetching Square catalog:', error);
+    return NextResponse.json({ error: 'Failed to fetch catalog' }, { status: 500 });
+  }
+}

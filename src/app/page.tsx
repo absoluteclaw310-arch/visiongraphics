@@ -21,9 +21,9 @@ export default function Home() {
           <a href="/membership" className="bg-white text-blue-700 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
             Become a Member
           </a>
-          <a href="#products" className="bg-blue-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-400 transition border border-blue-300">
+          <Link href="/products" className="bg-blue-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-400 transition border border-blue-300">
             Our Catalog
-          </a>
+          </Link>
         </div>
       </header>
 
