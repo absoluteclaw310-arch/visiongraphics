@@ -16,7 +16,7 @@ export default function Home() {
 
       {/* Hero Section */}
       <header className="py-20 px-6 text-center bg-gradient-to-r from-blue-600 to-blue-800 text-white">
-        <h1 className="text-4xl md:text-6xl font-extrabold mb-4 font-primary">Upstate NY&apos;s Sign Supply Distribution</h1>
+        <h1 className="text-4xl md:text-6xl font-extrabold mb-4 font-primary">Upstate NY&apos;s Sign Distribution</h1>
         <h2 className="text-2xl md:text-3xl font-semibold mb-8 font-secondary text-blue-100">Capital District&apos;s Sign Supplier</h2>
         <div className="flex justify-center gap-4">
           <Link href="/membership" className="bg-white text-blue-700 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
