@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Define standard item type from Stripe catalog format
 type ProductItem = {
@@ -20,6 +20,27 @@ export default function ProductList({ items }: { items: ProductItem[] }) {
   const [cartOpen, setCartOpen] = useState(false);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  // Load cart from local storage on mount
+  useEffect(() => {
+    const savedCart = localStorage.getItem('vision_graphics_cart');
+    if (savedCart) {
+      try {
+        setCart(JSON.parse(savedCart));
+      } catch (e) {
+        console.error('Failed to parse cart', e);
+      }
+    }
+    setIsLoaded(true);
+  }, []);
+
+  // Save cart to local storage whenever it changes
+  useEffect(() => {
+    if (isLoaded) {
+      localStorage.setItem('vision_graphics_cart', JSON.stringify(cart));
+    }
+  }, [cart, isLoaded]);
 
   const addToCart = (item: ProductItem) => {
     setCart((prev) => {
