@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import ProductList from '@/components/ProductList';
 
 // Force dynamic rendering so it pulls fresh catalog data
 export const dynamic = 'force-dynamic';
@@ -35,36 +36,7 @@ export default async function ProductsPage() {
       </nav>
 
       <main className="flex-grow py-12 px-6 max-w-6xl mx-auto w-full">
-        <h1 className="text-4xl font-bold mb-8 font-primary text-blue-900">Our Catalog</h1>
-        
-        {items.length === 0 ? (
-          <div className="bg-white p-8 rounded-xl shadow-sm text-center border">
-            <h2 className="text-2xl mb-2 text-gray-600">No products found.</h2>
-            <p className="text-gray-500">Your Stripe catalog might be empty or syncing.</p>
-          </div>
-        ) : (
-          <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-            {items.map((item: any) => {
-              return (
-                <div key={item.id} className="bg-white p-6 rounded-xl shadow-md border hover:border-blue-400 transition flex flex-col">
-                  <h3 className="text-xl font-bold mb-2 font-primary">{item.name || 'Unnamed Item'}</h3>
-                  {item.description && (
-                    <p className="text-gray-600 text-sm mb-4 flex-grow line-clamp-3">
-                      {item.description}
-                    </p>
-                  )}
-                  <div className="mt-auto flex items-center justify-between">
-                    <span className="text-lg font-bold text-green-700">${item.price}</span>
-                    <button className="bg-blue-600 text-white px-4 py-2 rounded font-semibold hover:bg-blue-500 transition text-sm">
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
+        <ProductList items={items} />
       </main>
     </div>
   );
