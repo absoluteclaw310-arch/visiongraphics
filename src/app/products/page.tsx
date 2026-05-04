@@ -40,26 +40,22 @@ export default async function ProductsPage() {
         {items.length === 0 ? (
           <div className="bg-white p-8 rounded-xl shadow-sm text-center border">
             <h2 className="text-2xl mb-2 text-gray-600">No products found.</h2>
-            <p className="text-gray-500">Your Square catalog might be empty or syncing.</p>
+            <p className="text-gray-500">Your Stripe catalog might be empty or syncing.</p>
           </div>
         ) : (
           <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6">
             {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-            {items.map((item: { id: string; itemData?: any }) => {
-              const itemData = item.itemData;
-              const priceMoney = itemData?.variations?.[0]?.itemVariationData?.priceMoney;
-              const price = priceMoney ? (Number(priceMoney.amount) / 100).toFixed(2) : 'N/A';
-
+            {items.map((item: any) => {
               return (
                 <div key={item.id} className="bg-white p-6 rounded-xl shadow-md border hover:border-blue-400 transition flex flex-col">
-                  <h3 className="text-xl font-bold mb-2 font-primary">{itemData?.name || 'Unnamed Item'}</h3>
-                  {itemData?.description && (
+                  <h3 className="text-xl font-bold mb-2 font-primary">{item.name || 'Unnamed Item'}</h3>
+                  {item.description && (
                     <p className="text-gray-600 text-sm mb-4 flex-grow line-clamp-3">
-                      {itemData.description}
+                      {item.description}
                     </p>
                   )}
                   <div className="mt-auto flex items-center justify-between">
-                    <span className="text-lg font-bold text-green-700">${price}</span>
+                    <span className="text-lg font-bold text-green-700">${item.price}</span>
                     <button className="bg-blue-600 text-white px-4 py-2 rounded font-semibold hover:bg-blue-500 transition text-sm">
                       Add to Cart
                     </button>
