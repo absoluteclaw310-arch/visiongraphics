@@ -7,12 +7,17 @@ export const dynamic = 'force-dynamic';
 
 async function getProducts() {
   const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-  // Use VERCEL_URL if available, otherwise fallback
-  const host = process.env.VERCEL_URL || 'localhost:3000';
+  // Use explicit production URL to avoid VERCEL_URL pointing to the wrong internal deployment host
+  const host = process.env.VERCEL_PROJECT_PRODUCTION_URL || 'visiongraphics.vercel.app';
   
   try {
-    const res = await fetch(`${protocol}://${host}/api/catalog`, { cache: 'no-store' });
-    if (!res.ok) throw new Error('Failed to fetch catalog');
+    const res = await fetch(`${protocol}://${host}/api/catalog`, { 
+      cache: 'no-store',
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+    if (!res.ok) throw new Error(`Failed to fetch catalog: ${res.status}`);
     return res.json();
   } catch (error) {
     console.error(error);
