@@ -19,6 +19,7 @@ type CartItem = ProductItem & {
 export default function ProductList({ items }: { items: ProductItem[] }) {
   const [cartOpen, setCartOpen] = useState(false);
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   const addToCart = (item: ProductItem) => {
     setCart((prev) => {
@@ -50,6 +51,29 @@ export default function ProductList({ items }: { items: ProductItem[] }) {
   }, 0);
 
   const cartItemCount = cart.reduce((count, item) => count + item.quantity, 0);
+
+  const handleCheckout = async () => {
+    setIsCheckingOut(true);
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: cart }),
+      });
+      const data = await res.json();
+      
+      if (data.url) {
+        window.location.href = data.url; // Redirect to Stripe
+      } else {
+        alert('Failed to initiate checkout.');
+        setIsCheckingOut(false);
+      }
+    } catch (err) {
+      console.error(err);
+      alert('An error occurred during checkout.');
+      setIsCheckingOut(false);
+    }
+  };
 
   return (
     <>
@@ -148,8 +172,12 @@ export default function ProductList({ items }: { items: ProductItem[] }) {
                   <span className="font-bold text-gray-600">Subtotal</span>
                   <span className="font-bold text-xl">${cartTotal.toFixed(2)}</span>
                 </div>
-                <button className="w-full bg-blue-700 text-white py-3 rounded-lg font-bold hover:bg-blue-600 transition shadow-md">
-                  Checkout
+                <button 
+                  onClick={handleCheckout}
+                  disabled={isCheckingOut}
+                  className="w-full bg-blue-700 text-white py-3 rounded-lg font-bold hover:bg-blue-600 transition shadow-md disabled:bg-blue-400"
+                >
+                  {isCheckingOut ? 'Redirecting...' : 'Checkout'}
                 </button>
               </div>
             )}
