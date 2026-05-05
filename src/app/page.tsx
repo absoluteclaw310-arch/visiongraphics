@@ -90,8 +90,7 @@ export default function Home() {
           <div className="text-left">
             <h3 className="text-xl font-semibold mb-4 font-primary">Contact Us</h3>
             <p className="text-gray-400">Interested in a wholesale account?</p>
-            <p className="text-lg font-medium mt-2">Email: info@visiongraphics.example</p>
-            <p className="text-lg font-medium">Phone: (555) 123-4567</p>
+            <p className="text-lg font-medium mt-2">Fill out our membership form to get started.</p>
           </div>
         </div>
         <div className="text-center mt-12 pt-8 border-t border-gray-800 text-gray-500 text-sm">
