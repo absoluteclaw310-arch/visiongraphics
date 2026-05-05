@@ -1,35 +1,32 @@
 import { NextResponse } from 'next/server';
-import { stripe } from '@/lib/stripe/client';
+import fs from 'fs/promises';
+import path from 'path';
 
 export async function GET() {
   try {
-    // Fetch active products from Stripe
-    const products = await stripe.products.list({
-      active: true,
-      expand: ['data.default_price'],
-    });
+    const productsDir = path.join(process.cwd(), 'shop', 'products');
     
-    // Format them for the frontend
-    const items = products.data.map(product => {
-      // Handle the expanded price object
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const defaultPrice = product.default_price as any;
-      const priceAmount = defaultPrice?.unit_amount 
-        ? (defaultPrice.unit_amount / 100).toFixed(2) 
-        : '0.00';
-        
-      return {
-        id: product.id,
-        name: product.name,
-        description: product.description,
-        price: priceAmount,
-        image: product.images?.[0] || null,
-      };
-    });
+    // Check if the directory exists
+    try {
+      await fs.access(productsDir);
+    } catch {
+      return NextResponse.json({ items: [] });
+    }
+
+    const files = await fs.readdir(productsDir);
+    const jsonFiles = files.filter(file => file.endsWith('.json'));
+
+    const items = await Promise.all(
+      jsonFiles.map(async (file) => {
+        const filePath = path.join(productsDir, file);
+        const fileContent = await fs.readFile(filePath, 'utf8');
+        return JSON.parse(fileContent);
+      })
+    );
     
     return NextResponse.json({ items });
   } catch (error) {
-    console.error('Error fetching Stripe catalog:', error);
+    console.error('Error fetching local catalog:', error);
     return NextResponse.json({ error: 'Failed to fetch catalog' }, { status: 500 });
   }
 }

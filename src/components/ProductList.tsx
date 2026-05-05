@@ -2,19 +2,72 @@
 
 import React, { useState, useEffect } from 'react';
 
-// Define standard item type from Stripe catalog format
-type ProductItem = {
-  id: string;
-  name: string;
-  description: string | null;
-  price: string;
-  image: string | null;
+type ProductOption = {
+  size: string;
+  price: number;
 };
 
-// Define cart item type
-type CartItem = ProductItem & {
+type ProductItem = {
+  id: string;
+  categoryId: string;
+  name: string;
+  description: string;
+  photo: string;
+  options: ProductOption[];
+};
+
+type CartItem = {
+  cartId: string;
+  productId: string;
+  name: string;
+  size: string;
+  price: number;
   quantity: number;
 };
+
+// Component to handle individual product rendering to manage its own selected size state
+function ProductCard({ item, onAddToCart }: { item: ProductItem, onAddToCart: (item: ProductItem, option: ProductOption) => void }) {
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState(0);
+  
+  // Safe fallback if options are missing or empty
+  if (!item.options || item.options.length === 0) return null;
+  
+  const selectedOption = item.options[selectedOptionIndex];
+
+  return (
+    <div className="bg-white p-6 rounded-xl shadow-md border hover:border-blue-400 transition flex flex-col">
+      <h3 className="text-xl font-bold mb-2 font-primary">{item.name}</h3>
+      <p className="text-gray-600 text-sm mb-4 flex-grow line-clamp-3">
+        {item.description}
+      </p>
+      
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700 mb-1">Select Size</label>
+        <select 
+          className="w-full border border-gray-300 rounded p-2 text-sm focus:ring-blue-500 focus:border-blue-500"
+          value={selectedOptionIndex}
+          onChange={(e) => setSelectedOptionIndex(Number(e.target.value))}
+        >
+          {item.options.map((opt, idx) => (
+            <option key={idx} value={idx}>
+              {opt.size}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="mt-auto flex items-center justify-between">
+        <span className="text-lg font-bold text-green-700">${selectedOption.price.toFixed(2)}</span>
+        <button 
+          onClick={() => onAddToCart(item, selectedOption)}
+          className="bg-blue-600 text-white px-4 py-2 rounded font-semibold hover:bg-blue-500 transition text-sm"
+        >
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export default function ProductList({ items }: { items: ProductItem[] }) {
   const [cartOpen, setCartOpen] = useState(false);
@@ -24,7 +77,7 @@ export default function ProductList({ items }: { items: ProductItem[] }) {
 
   // Load cart from local storage on mount
   useEffect(() => {
-    const savedCart = localStorage.getItem('vision_graphics_cart');
+    const savedCart = localStorage.getItem('vision_graphics_cart_v2');
     if (savedCart) {
       try {
         setCart(JSON.parse(savedCart));
@@ -38,27 +91,36 @@ export default function ProductList({ items }: { items: ProductItem[] }) {
   // Save cart to local storage whenever it changes
   useEffect(() => {
     if (isLoaded) {
-      localStorage.setItem('vision_graphics_cart', JSON.stringify(cart));
+      localStorage.setItem('vision_graphics_cart_v2', JSON.stringify(cart));
     }
   }, [cart, isLoaded]);
 
-  const addToCart = (item: ProductItem) => {
+  const addToCart = (product: ProductItem, option: ProductOption) => {
+    const cartId = `${product.id}-${option.size}`;
+    
     setCart((prev) => {
-      const existing = prev.find((i) => i.id === item.id);
+      const existing = prev.find((i) => i.cartId === cartId);
       if (existing) {
         return prev.map((i) => 
-          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+          i.cartId === cartId ? { ...i, quantity: i.quantity + 1 } : i
         );
       }
-      return [...prev, { ...item, quantity: 1 }];
+      return [...prev, { 
+        cartId,
+        productId: product.id,
+        name: product.name,
+        size: option.size,
+        price: option.price,
+        quantity: 1 
+      }];
     });
     setCartOpen(true);
   };
 
-  const updateQuantity = (id: string, delta: number) => {
+  const updateQuantity = (cartId: string, delta: number) => {
     setCart((prev) => {
       return prev.map((item) => {
-        if (item.id === id) {
+        if (item.cartId === cartId) {
           const newQuantity = Math.max(0, item.quantity + delta);
           return { ...item, quantity: newQuantity };
         }
@@ -68,7 +130,7 @@ export default function ProductList({ items }: { items: ProductItem[] }) {
   };
 
   const cartTotal = cart.reduce((total, item) => {
-    return total + (parseFloat(item.price) * item.quantity);
+    return total + (item.price * item.quantity);
   }, 0);
 
   const cartItemCount = cart.reduce((count, item) => count + item.quantity, 0);
@@ -86,7 +148,7 @@ export default function ProductList({ items }: { items: ProductItem[] }) {
       if (data.url) {
         window.location.href = data.url; // Redirect to Stripe
       } else {
-        alert('Failed to initiate checkout.');
+        alert('Checkout via Stripe requires product price IDs. (Currently mock setup).');
         setIsCheckingOut(false);
       }
     } catch (err) {
@@ -108,31 +170,15 @@ export default function ProductList({ items }: { items: ProductItem[] }) {
         </button>
       </div>
 
-      {items.length === 0 ? (
+      {(!items || items.length === 0) ? (
         <div className="bg-white p-8 rounded-xl shadow-sm text-center border">
           <h2 className="text-2xl mb-2 text-gray-600">No products found.</h2>
-          <p className="text-gray-500">Your Stripe catalog might be empty or syncing.</p>
+          <p className="text-gray-500">The local shop directory might be empty.</p>
         </div>
       ) : (
         <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6">
           {items.map((item) => (
-            <div key={item.id} className="bg-white p-6 rounded-xl shadow-md border hover:border-blue-400 transition flex flex-col">
-              <h3 className="text-xl font-bold mb-2 font-primary">{item.name || 'Unnamed Item'}</h3>
-              {item.description && (
-                <p className="text-gray-600 text-sm mb-4 flex-grow line-clamp-3">
-                  {item.description}
-                </p>
-              )}
-              <div className="mt-auto flex items-center justify-between">
-                <span className="text-lg font-bold text-green-700">${item.price}</span>
-                <button 
-                  onClick={() => addToCart(item)}
-                  className="bg-blue-600 text-white px-4 py-2 rounded font-semibold hover:bg-blue-500 transition text-sm"
-                >
-                  Add to Cart
-                </button>
-              </div>
-            </div>
+            <ProductCard key={item.id} item={item} onAddToCart={addToCart} />
           ))}
         </div>
       )}
@@ -164,19 +210,20 @@ export default function ProductList({ items }: { items: ProductItem[] }) {
               ) : (
                 <div className="space-y-6">
                   {cart.map((item) => (
-                    <div key={item.id} className="flex justify-between items-center">
+                    <div key={item.cartId} className="flex justify-between items-center">
                       <div className="flex-grow pr-4">
                         <h4 className="font-bold text-gray-800">{item.name}</h4>
-                        <p className="text-gray-500 text-sm">${item.price} each</p>
+                        <p className="text-gray-500 text-sm">Size: {item.size}</p>
+                        <p className="text-gray-500 text-sm">${item.price.toFixed(2)} each</p>
                       </div>
                       <div className="flex items-center space-x-3">
                         <button 
-                          onClick={() => updateQuantity(item.id, -1)}
+                          onClick={() => updateQuantity(item.cartId, -1)}
                           className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center font-bold"
                         >-</button>
                         <span className="w-4 text-center">{item.quantity}</span>
                         <button 
-                          onClick={() => updateQuantity(item.id, 1)}
+                          onClick={() => updateQuantity(item.cartId, 1)}
                           className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center font-bold"
                         >+</button>
                       </div>
