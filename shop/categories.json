@@ -1,0 +1,17 @@
+[
+  {
+    "id": "die-cut-vinyl",
+    "name": "Die-Cut Vinyl",
+    "description": "High-quality adhesive vinyl for precision cutting."
+  },
+  {
+    "id": "print-materials",
+    "name": "Print Materials",
+    "description": "UV, Solvent, and Eco-Solvent compatible media."
+  },
+  {
+    "id": "consumables",
+    "name": "Application Tools & Consumables",
+    "description": "Transfer tapes, squeegees, and cleaning agents."
+  }
+]

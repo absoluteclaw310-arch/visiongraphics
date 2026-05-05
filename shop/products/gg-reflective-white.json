@@ -1,0 +1,12 @@
+{
+  "id": "gg-6mil-white-reflective",
+  "categoryId": "specialty-materials",
+  "name": "Grant Graphics 6mil White Reflective Vinyl",
+  "description": "Permanent adhesive 6 mil reflective vinyl. Used for commercial signs, fleet and vehicle applications.",
+  "photo": "assets/images/products/reflective-white.jpg",
+  "options": [
+    { "size": "24\" x 10'", "price": 110.00 },
+    { "size": "48\" x 10'", "price": 210.00 },
+    { "size": "54\" x 10'", "price": 230.00 }
+  ]
+}
