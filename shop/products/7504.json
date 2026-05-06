@@ -6,8 +6,12 @@
   "photo": "https://www.fdcfilms.com/wp-content/uploads/2019/12/2100002.jpg",
   "options": [
     {
-      "size": "54\" x 50Yds",
+      "size": "38\" x 50Yds",
       "price": 150
+    },
+    {
+      "size": "54\" x 50Yds",
+      "price": 300
     }
   ]
 }

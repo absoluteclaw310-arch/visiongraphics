@@ -14,6 +14,7 @@ type ProductItem = {
   description: string;
   photo: string;
   options: ProductOption[];
+  status?: string;
 };
 
 type CartItem = {
@@ -34,8 +35,15 @@ function ProductCard({ item, onAddToCart }: { item: ProductItem, onAddToCart: (i
   
   const selectedOption = item.options[selectedOptionIndex];
 
+  const isOutOfStock = item.status === 'OUT OF STOCK';
+
   return (
-    <div className="bg-white p-6 rounded-xl shadow-md border hover:border-blue-400 transition flex flex-col">
+    <div className="bg-white p-6 rounded-xl shadow-md border hover:border-blue-400 transition flex flex-col relative">
+      {item.status && (
+        <span className={`absolute top-2 right-2 px-2 py-1 text-xs font-bold rounded ${item.status === 'OUT OF STOCK' ? 'bg-red-100 text-red-800' : 'bg-orange-100 text-orange-800'}`}>
+          {item.status}
+        </span>
+      )}
       <h3 className="text-xl font-bold mb-2 font-primary">{item.name}</h3>
       <p className="text-gray-600 text-sm mb-4 flex-grow line-clamp-3">
         {item.description}
@@ -56,13 +64,14 @@ function ProductCard({ item, onAddToCart }: { item: ProductItem, onAddToCart: (i
         </select>
       </div>
 
-      <div className="mt-auto flex items-center justify-between">
+      <div className="mt-auto flex items-center justify-between mt-4">
         <span className="text-lg font-bold text-green-700">${selectedOption.price.toFixed(2)}</span>
         <button 
-          onClick={() => onAddToCart(item, selectedOption)}
-          className="bg-blue-600 text-white px-4 py-2 rounded font-semibold hover:bg-blue-500 transition text-sm"
+          onClick={() => !isOutOfStock && onAddToCart(item, selectedOption)}
+          disabled={isOutOfStock}
+          className={`${isOutOfStock ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-500'} text-white px-4 py-2 rounded font-semibold transition text-sm`}
         >
-          Add to Cart
+          {isOutOfStock ? 'Sold Out' : 'Add to Cart'}
         </button>
       </div>
     </div>
