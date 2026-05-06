@@ -1,13 +1,13 @@
 {
   "id": "lumina-7038",
-  "categoryId": "laminate",
+  "categoryId": "Laminate",
   "name": "Lumina® by FDC 7038 Laminate",
   "description": "Intermediate-grade calendered vinyl laminate to protect vinyl films from abrasion, UV exposure, and chemicals.",
   "photo": "https://www.fdcfilms.com/wp-content/uploads/2019/12/000-Clear.jpg",
   "options": [
     {
       "size": "54\" x 50Yds",
-      "price": 350.00
+      "price": 350
     }
   ]
 }
