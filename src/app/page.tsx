@@ -8,9 +8,7 @@ export default function Home() {
       <nav className="bg-white shadow-sm border-b py-4 px-6 flex justify-between items-center">
         <div className="text-2xl font-bold text-blue-700 font-primary">Vision Graphics</div>
         <div className="space-x-6 hidden md:flex">
-          <a href="#products" className="hover:text-blue-600 transition">Products</a>
-          <a href="#about" className="hover:text-blue-600 transition">About</a>
-          <a href="#contact" className="hover:text-blue-600 transition">Contact</a>
+          <Link href="/products" className="hover:text-blue-600 transition">Products</Link>
         </div>
       </nav>
 
@@ -49,11 +47,11 @@ export default function Home() {
               icon: "" 
             }
           ].map((item, idx) => (
-            <div key={idx} className="p-6 bg-white rounded-xl shadow-md border hover:border-blue-400 transition">
+            <Link href="/products" key={idx} className="block p-6 bg-white rounded-xl shadow-md border hover:border-blue-400 transition cursor-pointer">
               {item.icon && <div className="text-4xl mb-4">{item.icon}</div>}
               <h3 className="text-xl font-bold mb-2 font-primary">{item.title}</h3>
               <p className="text-gray-600">{item.desc}</p>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
