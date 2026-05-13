@@ -7,16 +7,8 @@
   "status": "BACKORDERED",
   "options": [
     {
-      "size": "24\" x 10'",
-      "price": 110
-    },
-    {
-      "size": "48\" x 10'",
-      "price": 210
-    },
-    {
-      "size": "54\" x 10'",
-      "price": 230
+      "size": "Default",
+      "price": 1100
     }
   ]
 }

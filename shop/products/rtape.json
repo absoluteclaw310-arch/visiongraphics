@@ -1,0 +1,17 @@
+{
+  "id": "rtape-transfer",
+  "categoryId": "Consumables",
+  "name": "R-Tape Transfer Tape",
+  "description": "High-quality transfer tape for vinyl application.",
+  "photo": "assets/images/products/rtape.jpg",
+  "options": [
+    {
+      "size": "12\"",
+      "price": 75
+    },
+    {
+      "size": "24\"",
+      "price": 155
+    }
+  ]
+}
