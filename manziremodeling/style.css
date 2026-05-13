@@ -1,0 +1,271 @@
+@font-face {
+    font-family: 'Moderne';
+    src: url('Moderne.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Lamerica';
+    src: url('Lamerica.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'Moderne', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background-color: #f9f9f9;
+}
+
+header {
+    background: #2c3e50;
+    color: #fff;
+    padding: 0.5rem 0; /* Reduced padding from 1rem to 0.5rem */
+    position: sticky;
+    top: 0; /* Removed the 40px gap left behind by the banner */
+    z-index: 1000;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+}
+
+.menu-toggle {
+    display: block;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+.logo {
+    font-family: 'Lamerica', sans-serif;
+    font-size: 1.5rem;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+.nav-links {
+    list-style: none;
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    right: 20px;
+    background: #2c3e50;
+    padding: 1rem;
+    margin: 1rem 0 0 0;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    gap: 15px;
+    min-width: 200px;
+}
+
+.nav-links.active {
+    display: flex;
+}
+
+nav ul {
+    list-style: none;
+    display: none; /* overrides old display: flex if nav-links class is missing, but .nav-links handles it */
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #bdc3c7;
+}
+
+main {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 0 20px;
+}
+
+.hero {
+    text-align: center;
+    padding: 4rem 0;
+    background: #ecf0f1;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+.hero h1 {
+    font-family: 'Lamerica', sans-serif;
+    font-weight: normal;
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.btn {
+    display: inline-block;
+    background: #e67e22;
+    color: #fff;
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #d35400;
+}
+
+.intro {
+    text-align: center;
+}
+
+h1 {
+    font-family: 'Lamerica', sans-serif;
+    font-weight: normal;
+    color: #2c3e50;
+    text-transform: uppercase;
+}
+
+h2, h3, h4, h5, h6 {
+    font-family: 'Lamerica', sans-serif;
+    font-weight: normal;
+    color: #2c3e50;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem 0;
+    background: #2c3e50;
+    color: #fff;
+    margin-top: 3rem;
+}
+
+/* Form Styles */
+.contact-container {
+    padding: 2rem 0;
+}
+
+.contact-form {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: left;
+    background: #fff;
+    padding: 3rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 1.5rem;
+}
+
+.form-row .form-group {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: 1rem;
+    background-color: #fcfcfc;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: #e67e22;
+    background-color: #fff;
+}
+
+.submit-btn {
+    width: 100%;
+    font-size: 1.1rem;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+}
+
+/* Construction Banner */
+.construction-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    z-index: 9999;
+    background: repeating-linear-gradient(
+        45deg,
+        #ffcc00,
+        #ffcc00 20px,
+        #000 20px,
+        #000 40px
+    );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    font-family: 'Lamerica', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.construction-banner span {
+    color: #000;
+    font-weight: 900;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    text-shadow: 
+        -2px -2px 0 #ffffff,  
+         2px -2px 0 #ffffff,
+        -2px  2px 0 #ffffff,
+         2px  2px 0 #ffffff,
+         0px  2px 0 #ffffff,
+         2px  0px 0 #ffffff,
+         0px -2px 0 #ffffff,
+        -2px  0px 0 #ffffff;
+    letter-spacing: 2px;
+}

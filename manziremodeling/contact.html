@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Manzi Remodeling</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <header>
+        <nav>
+            <div class="logo">Manzi Remodeling</div>
+            <button class="menu-toggle">&#9776;</button>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="kitchens.html">Kitchens</a></li>
+                <li><a href="bathrooms.html">Bathrooms</a></li>
+                <li><a href="tile.html">Tile Work</a></li>
+                <li><a href="process.html">Process</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Contact Us</h1>
+        <p>Ready to start your home transformation? Contact Jonathan Manzi by filling out the form below, and we'll get back to you shortly to schedule a free estimate.</p>
+        
+        <div class="contact-container">
+            <form action="https://docs.google.com/forms/d/e/1FAIpQLSd5e-GlOMa8yFCFPbeRdWI_bvb4FlKjoDV0iCAvkNHG7XTFPQ/formResponse" method="post" target="hidden_iframe" class="contact-form" id="contactForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="entry.600061920" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="entry.878167482" placeholder="(518) 000-0000" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="entry.238550636" placeholder="email@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="entry.222863690" placeholder="e.g. Albany" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="service">Project Type</label>
+                    <select id="service" name="entry.1743288544">
+                        <option value="Kitchen Remodeling">Kitchen Remodeling</option>
+                        <option value="Bathroom Remodeling">Bathroom Remodeling</option>
+                        <option value="Custom Tile Work">Custom Tile Work</option>
+                        <option value="Deck">Custom Deck</option>
+                        <option value="Fence">Fence Installation</option>
+                        <option value="Other">Other / Full Home Remodel</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Project Description</label>
+                    <textarea id="message" name="entry.565258370" rows="6" placeholder="Tell us a little bit about what you're looking to do..."></textarea>
+                </div>
+
+                <button type="submit" class="btn submit-btn">Get Your Free Estimate</button>
+            </form>
+            
+            <!-- Hidden iframe for Silent Bridge submission -->
+            <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted){document.getElementById('contactForm').reset(); alert('Thank you! Your estimate request has been sent.');}"></iframe>
+            
+            <script>
+                var submitted = false;
+                document.getElementById('contactForm').addEventListener('submit', function() {
+                    submitted = true;
+                });
+            </script>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 Manzi Remodeling. All rights reserved.</p>
+        <p>Jonathan Manzi | Your Local Professional</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
