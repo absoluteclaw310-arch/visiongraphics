@@ -1,0 +1,17 @@
+{
+  "id": "ora-3258-gloss-white",
+  "categoryId": "Vinyl",
+  "name": "Orafol 3258 Gloss White Vinyl (6 mil)",
+  "description": "High-quality gloss white vinyl, 6 mil thickness.",
+  "photo": "assets/images/products/ora3258.jpg",
+  "options": [
+    {
+      "size": "24\"",
+      "price": 120
+    },
+    {
+      "size": "48\"",
+      "price": 210
+    }
+  ]
+}
