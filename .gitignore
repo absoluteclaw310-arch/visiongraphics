@@ -1,2 +1,8 @@
 .vercel
 node_modules
+codex/
+.openclaw/
+image_opt_venv/
+memory/
+skills/
+state/
