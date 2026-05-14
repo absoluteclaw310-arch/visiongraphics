@@ -1,0 +1,17 @@
+{
+  "id": "rtape-4075rla",
+  "categoryId": "Transfer Tape",
+  "name": "RTape 4075RLA Transfer Tape",
+  "description": "Pressure-sensitive, rubber-based paper application tape. Series: 4075RLA. Thickness: 4.5 mil.",
+  "photo": "assets/images/products/rtape.jpg",
+  "options": [
+    {
+      "size": "12\"",
+      "price": 75
+    },
+    {
+      "size": "24\"",
+      "price": 155
+    }
+  ]
+}
