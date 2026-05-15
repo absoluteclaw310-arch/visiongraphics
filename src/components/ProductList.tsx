@@ -58,7 +58,7 @@ function ProductCard({ item, onAddToCart }: { item: ProductItem, onAddToCart: (i
         >
           {item.options.map((opt, idx) => (
             <option key={idx} value={idx}>
-              {opt.size}
+              {opt.size} - ${opt.price.toFixed(2)}
             </option>
           ))}
         </select>
