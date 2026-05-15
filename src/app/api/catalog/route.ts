@@ -55,11 +55,22 @@ export async function GET() {
 
       // Map all active prices to options
       const productPrices = pricesByProduct[product.id] || [];
-      const options = productPrices.map(price => ({
-        size: price.nickname || price.metadata.size || 'Standard Roll',
-        price: price.unit_amount ? (price.unit_amount / 100) : 0,
-        stripePriceId: price.id,
-      })).sort((a, b) => a.price - b.price); // Sort sizes by price low to high
+      const deduplicatedOptions: Record<string, any> = {};
+      
+      productPrices.forEach(price => {
+        const sizeStr = price.nickname || price.metadata.size || 'Standard Roll';
+        // Keep the lowest active price for a given size string
+        const priceValue = price.unit_amount ? (price.unit_amount / 100) : 0;
+        if (!deduplicatedOptions[sizeStr] || deduplicatedOptions[sizeStr].price > priceValue) {
+          deduplicatedOptions[sizeStr] = {
+            size: sizeStr,
+            price: priceValue,
+            stripePriceId: price.id,
+          };
+        }
+      });
+
+      const options = Object.values(deduplicatedOptions).sort((a, b) => a.price - b.price); // Sort sizes by price low to high
 
       // Fallback if no prices
       if (options.length === 0) {
