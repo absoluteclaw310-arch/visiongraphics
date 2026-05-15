@@ -15,36 +15,69 @@ export async function GET() {
     // Fetch all active products
     const products = await stripe.products.list({
       active: true,
-      expand: ['data.default_price'],
+      limit: 100,
+    });
+
+    // Fetch all active prices to get the variable sizes
+    const prices = await stripe.prices.list({
+      active: true,
+      limit: 100,
+    });
+
+    // Group prices by product
+    const pricesByProduct: Record<string, Stripe.Price[]> = {};
+    prices.data.forEach(price => {
+      if (typeof price.product === 'string') {
+        if (!pricesByProduct[price.product]) pricesByProduct[price.product] = [];
+        pricesByProduct[price.product].push(price);
+      }
     });
 
     // Map Stripe products to the format expected by ProductList
     const items = products.data.map((product) => {
-      const priceObj = product.default_price as any;
-      const priceValue = priceObj ? (priceObj.unit_amount / 100) : 0;
-      
       // Determine a category from metadata or name fallback
       let categoryId = product.metadata.category || 'Other';
-      const nameLower = product.name.toLowerCase();
+      let nameStr = product.name;
+      const nameLower = nameStr.toLowerCase();
+      
+      // Request #3: remove 'HEAT' from the title of transfer tape
+      if (nameLower.includes('transfer tape')) {
+        nameStr = nameStr.replace(/heat\s+/i, '').replace(/Heat\s+/i, '');
+        categoryId = 'Transfer Tape';
+      }
+
       if (categoryId === 'Other') {
         if (nameLower.includes('vinyl')) categoryId = 'Die-Cut Vinyl';
-        else if (nameLower.includes('tape')) categoryId = 'Tools';
+        else if (nameLower.includes('tape')) categoryId = 'Transfer Tape';
         else if (nameLower.includes('laminate')) categoryId = 'Laminate';
         else if (nameLower.includes('banner') || nameLower.includes('paper')) categoryId = 'Printable Media';
+      }
+
+      // Map all active prices to options
+      const productPrices = pricesByProduct[product.id] || [];
+      const options = productPrices.map(price => ({
+        size: price.nickname || price.metadata.size || 'Standard Roll',
+        price: price.unit_amount ? (price.unit_amount / 100) : 0,
+        stripePriceId: price.id,
+      })).sort((a, b) => a.price - b.price); // Sort sizes by price low to high
+
+      // Fallback if no prices
+      if (options.length === 0) {
+        options.push({
+          size: 'Standard Roll',
+          price: 0,
+          stripePriceId: null
+        });
       }
 
       return {
         id: product.id,
         categoryId: categoryId,
-        name: product.name,
+        name: nameStr,
         description: product.description || '',
         photo: product.images[0] || '/placeholder-product.jpg',
-        options: [{
-          size: product.metadata.size || 'Standard Roll',
-          price: priceValue
-        }],
-        status: priceValue === 0 ? 'OUT OF STOCK' : undefined,
-        stripePriceId: priceObj?.id || null,
+        options: options,
+        status: options.every(o => o.price === 0) ? 'OUT OF STOCK' : undefined,
       };
     });
 

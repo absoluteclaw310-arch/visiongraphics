@@ -62,6 +62,11 @@ export async function GET() {
       if (targetSizes) {
         logs.push(`Updating sizes for ${product.name}...`);
         
+        // Remove default price before archiving
+        if (product.default_price) {
+          await stripe.products.update(product.id, { default_price: '' as any });
+        }
+        
         // Deactivate old prices
         const productPrices = prices.data.filter(p => p.product === product.id);
         for (const p of productPrices) {
@@ -69,8 +74,9 @@ export async function GET() {
         }
         
         // Add new prices with sizes as nicknames
+        let isFirst = true;
         for (const ts of targetSizes) {
-          await stripe.prices.create({
+          const newPrice = await stripe.prices.create({
             product: product.id,
             unit_amount: ts.price,
             currency: 'usd',
@@ -78,6 +84,11 @@ export async function GET() {
             metadata: { size: ts.size }
           });
           logs.push(`  Added ${ts.size} at $${ts.price / 100}`);
+          
+          if (isFirst) {
+             await stripe.products.update(product.id, { default_price: newPrice.id });
+             isFirst = false;
+          }
         }
       }
     }
