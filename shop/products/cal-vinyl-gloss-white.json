@@ -1,0 +1,26 @@
+{
+  "id": "cal-vinyl-gloss-white",
+  "categoryId": "Die-Cut Vinyl",
+  "name": "Calendered Gloss White Vinyl",
+  "description": "Professional gloss white vinyl for short-to-medium term outdoor signage.",
+  "photo": "assets/images/products/cal-vinyl-white.jpg",
+  "status": "OUT OF STOCK",
+  "options": [
+    {
+      "size": "24\" x 10'",
+      "price": 45
+    },
+    {
+      "size": "48\" x 10'",
+      "price": 85
+    },
+    {
+      "size": "54\" x 10'",
+      "price": 95
+    },
+    {
+      "size": "60\" x 10'",
+      "price": 110
+    }
+  ]
+}

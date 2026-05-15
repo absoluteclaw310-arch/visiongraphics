@@ -1,0 +1,18 @@
+{
+  "id": "gg-6mil-white-reflective",
+  "categoryId": "Die-Cut Vinyl",
+  "name": "6mil White Reflective Vinyl",
+  "description": "6 mil reflective vinyl with permanent adhesive for signs and fleets.",
+  "photo": "assets/images/products/reflective-white.jpg",
+  "status": "BACKORDERED",
+  "options": [
+    {
+      "size": "30\" x 150'",
+      "price": 750
+    },
+    {
+      "size": "48\" x 150'",
+      "price": 1100
+    }
+  ]
+}

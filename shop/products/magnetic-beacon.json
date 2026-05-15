@@ -1,0 +1,13 @@
+{
+  "id": "magnetic-beacon-25",
+  "categoryId": "Print Materials",
+  "name": "Magnetic 25' Beacon",
+  "description": "Magnetic sheeting for vehicle signage.",
+  "photo": "assets/images/products/magnetic.jpg",
+  "options": [
+    {
+      "size": "25'",
+      "price": 250
+    }
+  ]
+}

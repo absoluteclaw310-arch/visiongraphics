@@ -1,0 +1,22 @@
+{
+  "id": "orafol-3164-economy",
+  "categoryId": "Printable Vinyl",
+  "name": "Orafol 3164 Economy Gloss Vinyl",
+  "description": "Economy gloss vinyl ideal for short-term promotional signs and POP graphics.",
+  "photo": "assets/images/products/orafol-3164.jpg",
+  "status": "BACKORDERED",
+  "options": [
+    {
+      "size": "24\" x 10'",
+      "price": 35
+    },
+    {
+      "size": "48\" x 10'",
+      "price": 65
+    },
+    {
+      "size": "54\" x 10'",
+      "price": 72
+    }
+  ]
+}
