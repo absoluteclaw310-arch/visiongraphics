@@ -21,12 +21,29 @@ export async function GET() {
     // Map Stripe products to the format expected by ProductList
     const items = products.data.map((product) => {
       const priceObj = product.default_price as any;
+      const priceValue = priceObj ? (priceObj.unit_amount / 100) : 0;
+      
+      // Determine a category from metadata or name fallback
+      let categoryId = product.metadata.category || 'Other';
+      const nameLower = product.name.toLowerCase();
+      if (categoryId === 'Other') {
+        if (nameLower.includes('vinyl')) categoryId = 'Die-Cut Vinyl';
+        else if (nameLower.includes('tape')) categoryId = 'Tools';
+        else if (nameLower.includes('laminate')) categoryId = 'Laminate';
+        else if (nameLower.includes('banner') || nameLower.includes('paper')) categoryId = 'Printable Media';
+      }
+
       return {
         id: product.id,
+        categoryId: categoryId,
         name: product.name,
         description: product.description || '',
-        image: product.images[0] || '/placeholder-product.jpg',
-        price: priceObj ? (priceObj.unit_amount / 100).toFixed(2) : 'Contact for pricing',
+        photo: product.images[0] || '/placeholder-product.jpg',
+        options: [{
+          size: product.metadata.size || 'Standard Roll',
+          price: priceValue
+        }],
+        status: priceValue === 0 ? 'OUT OF STOCK' : undefined,
         stripePriceId: priceObj?.id || null,
       };
     });

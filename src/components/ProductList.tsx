@@ -182,16 +182,16 @@ export default function ProductList({ items }: { items: ProductItem[] }) {
             {(!items || items.length === 0) ? (
         <div className="bg-white p-8 rounded-xl shadow-sm text-center border">
           <h2 className="text-2xl mb-2 text-gray-600">No products found.</h2>
-          <p className="text-gray-500">The local shop directory might be empty.</p>
+          <p className="text-gray-500">The catalog might be empty or syncing.</p>
         </div>
       ) : (
         <div className="space-y-12">
-          {["Die-Cut Vinyl", "Printable Vinyl", "Laminate", "Window Film", "Tools"].map(category => {
+          {Array.from(new Set(items.map(item => item.categoryId || 'Other'))).map(category => {
             const categoryItems = items
-              .filter(item => item.categoryId === category)
+              .filter(item => (item.categoryId || 'Other') === category)
               .sort((a, b) => {
-                const minPriceA = Math.min(...a.options.map(o => o.price));
-                const minPriceB = Math.min(...b.options.map(o => o.price));
+                const minPriceA = Math.min(...(a.options || []).map(o => o.price));
+                const minPriceB = Math.min(...(b.options || []).map(o => o.price));
                 return minPriceA - minPriceB;
               });
 
