@@ -2,7 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import ProductList from '@/components/ProductList';
 
-// Force dynamic rendering so it pulls fresh catalog data
+export const fetchCache = 'force-no-store';
+export const revalidate = 0;
 export const dynamic = 'force-dynamic';
 
 async function getProducts() {

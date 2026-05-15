@@ -5,6 +5,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_fallback_for
   apiVersion: '2024-12-18.acacia', // Use the latest stable API version
 });
 
+export const fetchCache = 'force-no-store';
+export const revalidate = 0;
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
