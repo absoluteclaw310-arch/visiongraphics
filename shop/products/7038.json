@@ -1,13 +1,13 @@
 {
-  "id": "lumina-7038",
+  "id": "lumina-7038-laminate",
   "categoryId": "Laminate",
   "name": "Lumina® by FDC 7038 Laminate",
-  "description": "Calendered vinyl laminate protecting against abrasion, UV, and chemicals.",
-  "photo": "https://www.fdcfilms.com/wp-content/uploads/2019/12/000-Clear.jpg",
+  "description": "Protective laminate for print media.",
+  "photo": "assets/images/products/lumina7038.jpg",
   "options": [
     {
-      "size": "54\" x 50Yds",
-      "price": 350
+      "size": "Standard",
+      "price": 260
     }
   ]
 }

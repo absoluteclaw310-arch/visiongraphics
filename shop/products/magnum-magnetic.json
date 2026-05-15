@@ -1,0 +1,13 @@
+{
+  "id": "magnum-magnetic-sheeting",
+  "categoryId": "MAGNETIC",
+  "name": "Magnum Magnetics Sheeting",
+  "description": "Flexible magnetic sheeting with superior holding power, designed to lay flat for vehicle magnets or POP displays.",
+  "photo": "assets/images/products/magnum-magnetic.jpg",
+  "options": [
+    {
+      "size": "24\" x 50'",
+      "price": 280
+    }
+  ]
+}
