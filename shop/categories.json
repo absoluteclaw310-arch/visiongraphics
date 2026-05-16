@@ -6,12 +6,17 @@
   },
   {
     "id": "print-materials",
-    "name": "Print Materials",
+    "name": "Magnetic Material",
     "description": "UV, Solvent, and Eco-Solvent compatible media."
   },
   {
     "id": "consumables",
     "name": "Application Tools & Consumables",
     "description": "Transfer tapes, squeegees, and cleaning agents."
+  },
+  {
+    "id": "other",
+    "name": "Printable Media",
+    "description": "Additional materials and supplies."
   }
 ]
