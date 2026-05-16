@@ -22,6 +22,11 @@ export async function GET() {
       limit: 100,
     });
 
+    // Filter to only include products tagged with website: 'vision graphics'
+    const filteredProducts = products.data.filter(p => 
+      p.metadata && p.metadata.website && p.metadata.website.toLowerCase() === 'vision graphics'
+    );
+
     // Fetch all active prices to get the variable sizes
     const prices = await stripe.prices.list({
       active: true,
@@ -38,7 +43,7 @@ export async function GET() {
     });
 
     // Map Stripe products to the format expected by ProductList
-    const items = products.data.map((product) => {
+    const items = filteredProducts.map((product) => {
       // Determine a category from metadata or name fallback
       let categoryId = product.metadata.category || 'Other';
       let nameStr = product.name;
