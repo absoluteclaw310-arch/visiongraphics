@@ -22,11 +22,17 @@ export async function GET() {
       limit: 100,
     });
 
-    // Filter to only include products tagged with website: 'vision graphics' and exclude 7504
-    const filteredProducts = products.data.filter(p => 
-      p.metadata && p.metadata.website && p.metadata.website.toLowerCase() === 'vision graphics' &&
-      !p.name.includes('7504')
-    );
+    // Filter to only include products tagged with website: 'vision graphics' and only 1 product of 7504
+    let has7504 = false;
+    const filteredProducts = products.data.filter(p => {
+      if (!(p.metadata && p.metadata.website && p.metadata.website.toLowerCase() === 'vision graphics')) return false;
+      
+      if (p.name.includes('7504')) {
+        if (has7504) return false;
+        has7504 = true;
+      }
+      return true;
+    });
 
     // Fetch all active prices to get the variable sizes
     const prices = await stripe.prices.list({
@@ -72,6 +78,10 @@ export async function GET() {
       }
 
       if (categoryId === 'Printable Media' && !nameLower.includes('3258')) {
+        categoryId = 'Banner Material';
+      }
+
+      if (nameLower.includes('7504')) {
         categoryId = 'Banner Material';
       }
 
