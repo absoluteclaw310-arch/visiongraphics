@@ -22,12 +22,15 @@ export async function GET() {
       limit: 100,
     });
 
-    // Filter to only include products tagged with website: 'vision graphics' and only 1 product of 7504
+    // Filter to only include products tagged with website: 'vision graphics', only 1 product of 7504, and exclude 3258
     let has7504 = false;
     const filteredProducts = products.data.filter(p => {
       if (!(p.metadata && p.metadata.website && p.metadata.website.toLowerCase() === 'vision graphics')) return false;
       
-      if (p.name.includes('7504')) {
+      const nameLower = p.name.toLowerCase();
+      if (nameLower.includes('3258')) return false;
+
+      if (nameLower.includes('7504')) {
         if (has7504) return false;
         has7504 = true;
       }
@@ -73,11 +76,7 @@ export async function GET() {
         categoryId = 'Magnet Material';
       }
 
-      if (nameLower.includes('3258')) {
-        categoryId = 'Printable Media';
-      }
-
-      if (categoryId === 'Printable Media' && !nameLower.includes('3258')) {
+      if (categoryId === 'Printable Media') {
         categoryId = 'Banner Material';
       }
 
