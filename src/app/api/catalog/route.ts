@@ -22,9 +22,10 @@ export async function GET() {
       limit: 100,
     });
 
-    // Filter to only include products tagged with website: 'vision graphics'
+    // Filter to only include products tagged with website: 'vision graphics' and exclude 7504
     const filteredProducts = products.data.filter(p => 
-      p.metadata && p.metadata.website && p.metadata.website.toLowerCase() === 'vision graphics'
+      p.metadata && p.metadata.website && p.metadata.website.toLowerCase() === 'vision graphics' &&
+      !p.name.includes('7504')
     );
 
     // Fetch all active prices to get the variable sizes
