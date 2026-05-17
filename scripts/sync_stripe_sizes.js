@@ -13,11 +13,11 @@ const productSizes = {
     { size: '60" x 33yd', price: 21000 }
   ],
   "Orafol 3164 Economy Gloss Vinyl": [
-    { size: '54" x 75 yds', price: 7200 }
+    { size: '54" x 25 yds', price: 7200 }
   ],
   "6mil White Reflective Vinyl": [
-    { size: '30" x 75 yds', price: 75000 },
-    { size: '48" x 75 yds', price: 110000 }
+    { size: '30" x 25 yds', price: 75000 },
+    { size: '48" x 25 yds', price: 110000 }
   ],
   "Calendered Gloss White Vinyl": [
     { size: '24" x 10\'', price: 4500 },
@@ -30,16 +30,16 @@ const productSizes = {
     { size: '54" x 50Yds', price: 18000 }
   ],
   "Lumina® by FDC 7238 Print Media": [
-    { size: '54" x 75 yds', price: 36000 }
+    { size: '54" x 25 yds', price: 36000 }
   ],
   "Lumina® by FDC 7204 Print Media": [
-    { size: '54" x 75 yds', price: 19000 }
+    { size: '54" x 25 yds', price: 19000 }
   ],
   "Lumina® by FDC 7038 Laminate": [
-    { size: '54" x 75 yds', price: 26000 }
+    { size: '54" x 25 yds', price: 26000 }
   ],
   "Lumina® by FDC 7267 Print Media": [
-    { size: '54" x 75 yds', price: 29500 }
+    { size: '54" x 25 yds', price: 29500 }
   ],
   "Magnum Magnetics Sheeting": [
     { size: '24" x 25\'', price: 28000 }
@@ -58,7 +58,7 @@ async function run() {
     let targetSizes = productSizes[name];
     if (!targetSizes) {
        if (name.includes('Transfer Tape') || name.includes('Medium Tack')) targetSizes = productSizes['RTape 4075RLA Transfer Tape'];
-       else if (name.includes('Solvent Gloss White')) targetSizes = [{size: '54" x 75 yds', price: 7139}];
+       else if (name.includes('Solvent Gloss White')) targetSizes = [{size: '54" x 25 yds', price: 7139}];
        else if (name.includes('Premium White Scrim')) targetSizes = productSizes['Lumina® by FDC 7504 Banner'];
        else if (name.includes('Economy Vinyl')) targetSizes = productSizes['Orafol 3164 Economy Gloss Vinyl'];
        else if (name.includes('Gloss Ultra-Calendered')) targetSizes = productSizes['Calendered Gloss White Vinyl'];
