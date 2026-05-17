@@ -66,7 +66,11 @@ export async function GET() {
         categoryId = 'Magnet Material';
       }
 
-      if (categoryId === 'Printable Media') {
+      if (nameLower.includes('3258')) {
+        categoryId = 'Printable Media';
+      }
+
+      if (categoryId === 'Printable Media' && !nameLower.includes('3258')) {
         categoryId = 'Banner Material';
       }
 
