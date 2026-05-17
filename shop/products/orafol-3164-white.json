@@ -1,0 +1,21 @@
+{
+  "id": "orafol-3164-economy-white",
+  "categoryId": "Die-Cut Vinyl",
+  "name": "Orafol 3164 Economy Gloss Vinyl - White",
+  "description": "Economy gloss vinyl ideal for short-term promotional signs and POP graphics.",
+  "photo": "assets/images/products/orafol-3164.jpg",
+  "options": [
+    {
+      "size": "15\" x 50 yd",
+      "price": 80
+    },
+    {
+      "size": "24\" x 50 yd",
+      "price": 150
+    },
+    {
+      "size": "30\" x 50 yd",
+      "price": 220
+    }
+  ]
+}

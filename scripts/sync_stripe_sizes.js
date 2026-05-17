@@ -12,8 +12,15 @@ const productSizes = {
     { size: '54" x 33yd', price: 18500 },
     { size: '60" x 33yd', price: 21000 }
   ],
-  "Orafol 3164 Economy Gloss Vinyl": [
-    { size: '54" x 25 yds', price: 7200 }
+  "Orafol 3164 Economy Gloss Vinyl - Black": [
+    { size: '15" x 50 yd', price: 8000 },
+    { size: '24" x 50 yd', price: 15000 },
+    { size: '30" x 50 yd', price: 22000 }
+  ],
+  "Orafol 3164 Economy Gloss Vinyl - White": [
+    { size: '15" x 50 yd', price: 8000 },
+    { size: '24" x 50 yd', price: 15000 },
+    { size: '30" x 50 yd', price: 22000 }
   ],
   "6mil White Reflective Vinyl": [
     { size: '30" x 25 yds', price: 75000 },
@@ -60,7 +67,7 @@ async function run() {
        if (name.includes('Transfer Tape') || name.includes('Medium Tack')) targetSizes = productSizes['RTape 4075RLA Transfer Tape'];
        else if (name.includes('Solvent Gloss White')) targetSizes = [{size: '54" x 25 yds', price: 7139}];
        else if (name.includes('Premium White Scrim')) targetSizes = productSizes['Lumina® by FDC 7504 Banner'];
-       else if (name.includes('Economy Vinyl')) targetSizes = productSizes['Orafol 3164 Economy Gloss Vinyl'];
+       else if (name.includes('Economy Vinyl')) targetSizes = productSizes['Orafol 3164 Economy Gloss Vinyl - White'];
        else if (name.includes('Gloss Ultra-Calendered')) targetSizes = productSizes['Calendered Gloss White Vinyl'];
     }
 
