@@ -13,14 +13,14 @@ const productSizes = {
     { size: '60" x 33yd', price: 21000 }
   ],
   "Orafol 3164 Economy Gloss Vinyl - Black": [
-    { size: '15" x 50 yd', price: 8000 },
-    { size: '24" x 50 yd', price: 15000 },
-    { size: '30" x 50 yd', price: 22000 }
+    { size: '15" x 25 yds', price: 8000 },
+    { size: '24" x 25 yds', price: 15000 },
+    { size: '30" x 25 yds', price: 22000 }
   ],
   "Orafol 3164 Economy Gloss Vinyl - White": [
-    { size: '15" x 50 yd', price: 8000 },
-    { size: '24" x 50 yd', price: 15000 },
-    { size: '30" x 50 yd', price: 22000 }
+    { size: '15" x 25 yds', price: 8000 },
+    { size: '24" x 25 yds', price: 15000 },
+    { size: '30" x 25 yds', price: 22000 }
   ],
   "6mil White Reflective Vinyl": [
     { size: '30" x 25 yds', price: 75000 },

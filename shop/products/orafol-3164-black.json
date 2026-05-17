@@ -6,15 +6,15 @@
   "photo": "assets/images/products/orafol-3164.jpg",
   "options": [
     {
-      "size": "15\" x 50 yd",
+      "size": "15\" x 25 yds",
       "price": 80
     },
     {
-      "size": "24\" x 50 yd",
+      "size": "24\" x 25 yds",
       "price": 150
     },
     {
-      "size": "30\" x 50 yd",
+      "size": "30\" x 25 yds",
       "price": 220
     }
   ]
