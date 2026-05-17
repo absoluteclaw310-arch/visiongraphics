@@ -5,18 +5,23 @@
     "description": "High-quality adhesive vinyl for precision cutting."
   },
   {
-    "id": "print-materials",
-    "name": "Magnetic Material",
+    "id": "banner-material",
+    "name": "Banner Material",
+    "description": "Banner materials."
+  },
+  {
+    "id": "printable-media",
+    "name": "Printable Media",
     "description": "UV, Solvent, and Eco-Solvent compatible media."
+  },
+  {
+    "id": "magnet-material",
+    "name": "Magnet Material",
+    "description": "Flexible magnetic sheeting for vehicle signage and displays."
   },
   {
     "id": "consumables",
     "name": "Application Tools & Consumables",
     "description": "Transfer tapes, squeegees, and cleaning agents."
-  },
-  {
-    "id": "other",
-    "name": "Printable Media",
-    "description": "Additional materials and supplies."
   }
 ]

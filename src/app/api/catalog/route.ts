@@ -59,7 +59,19 @@ export async function GET() {
         if (nameLower.includes('vinyl')) categoryId = 'Die-Cut Vinyl';
         else if (nameLower.includes('tape')) categoryId = 'Transfer Tape';
         else if (nameLower.includes('laminate')) categoryId = 'Laminate';
-        else if (nameLower.includes('banner') || nameLower.includes('paper')) categoryId = 'Printable Media';
+        else if (nameLower.includes('banner') || nameLower.includes('paper')) categoryId = 'Banner Material';
+      }
+
+      if (nameLower.includes('magnet')) {
+        categoryId = 'Magnet Material';
+      }
+
+      if (categoryId === 'Printable Media') {
+        categoryId = 'Banner Material';
+      }
+
+      if (categoryId === 'Other') {
+        categoryId = 'Printable Media';
       }
 
       // Map all active prices to options
