@@ -92,6 +92,10 @@ export default function Home() {
           </div>
         </div>
         <div className="text-center mt-12 pt-8 border-t border-gray-800 text-gray-500 text-sm">
+          <div className="flex justify-center gap-6 mb-4">
+            <Link href="/privacy" className="hover:text-white transition">Privacy Policy</Link>
+            <Link href="/accessibility" className="hover:text-white transition">Accessibility</Link>
+          </div>
           © {new Date().getFullYear()} Vision Graphics. All rights reserved.
         </div>
       </footer>
