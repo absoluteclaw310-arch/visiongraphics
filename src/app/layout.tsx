@@ -15,8 +15,7 @@ const nunito = Nunito({
 
 export const metadata: Metadata = {
   title: "Vision Graphics - Sign Supply Distribution",
-  description:
-    "Wholesale sign supply distribution warehouse serving the capital district for over 50 years.",
+  description: "Wholesale sign supply distribution warehouse serving the capital district for over 50 years.",
 };
 
 export default function RootLayout({
@@ -27,9 +26,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${michroma.variable} ${nunito.variable} antialiased`}
+      className={`${michroma.variable} ${nunito.variable} h-full antialiased`}
     >
-      <body className="font-secondary">{children}</body>
+      <body className="min-h-full flex flex-col font-secondary">{children}</body>
     </html>
   );
 }
