@@ -1,138 +1,58 @@
-import { NextResponse } from 'next/server';
-import Stripe from 'stripe';
+import { NextResponse } from "next/server";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_fallback_for_build_only', {
-  apiVersion: '2024-12-18.acacia', // Use the latest stable API version
-});
-
-export const fetchCache = 'force-no-store';
+export const fetchCache = "force-no-store";
 export const revalidate = 0;
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
+
+// Single digital product: a downloadable PDF guide.
+// The actual Stripe price ID must be configured via STRIPE_PDF_PRICE_ID.
+const DIGITAL_PRODUCT = {
+  id: process.env.STRIPE_PDF_PRODUCT_ID || "prod_digital_pdf_guide",
+  name: "The Complete Sign Shop Growth Playbook",
+  description:
+    "A 60-page actionable PDF packed with sourcing strategies, pricing frameworks, and systems to scale your sign shop. Instant download after purchase.",
+  price: 29.99,
+  priceId:
+    process.env.STRIPE_PDF_PRICE_ID ||
+    "price_1PlaceholderReplaceInVercel",
+  photo: "",
+};
 
 export async function GET() {
-  try {
-    if (!process.env.STRIPE_SECRET_KEY) {
-      console.error('STRIPE_SECRET_KEY is not configured');
-      return NextResponse.json({ error: 'Payment gateway configuration missing' }, { status: 500 });
-    }
+  const priceId = process.env.STRIPE_PDF_PRICE_ID;
 
-    // Fetch all active products
-    const products = await stripe.products.list({
-      active: true,
-      limit: 100,
+  if (!priceId) {
+    console.error("STRIPE_PDF_PRICE_ID is not configured");
+    // Return the product with a warning so the page renders; checkout will fail clearly.
+    return NextResponse.json({
+      items: [
+        {
+          ...DIGITAL_PRODUCT,
+          options: [
+            {
+              size: "Digital PDF",
+              price: DIGITAL_PRODUCT.price,
+              stripePriceId: null,
+            },
+          ],
+        },
+      ],
+      warning: "Payment not configured. Set STRIPE_PDF_PRICE_ID in Vercel.",
     });
-
-    // Filter to only include products tagged with website: 'vision graphics', only 1 product of 7504, and exclude 3258
-    let has7504 = false;
-    const filteredProducts = products.data.filter(p => {
-      if (!(p.metadata && p.metadata.website && p.metadata.website.toLowerCase() === 'vision graphics')) return false;
-      
-      const nameLower = p.name.toLowerCase();
-      if (nameLower.includes('3258')) return false;
-
-      if (nameLower.includes('7504')) {
-        if (has7504) return false;
-        has7504 = true;
-      }
-      return true;
-    });
-
-    // Fetch all active prices to get the variable sizes
-    const prices = await stripe.prices.list({
-      active: true,
-      limit: 100,
-    });
-
-    // Group prices by product
-    const pricesByProduct: Record<string, Stripe.Price[]> = {};
-    prices.data.forEach(price => {
-      if (typeof price.product === 'string') {
-        if (!pricesByProduct[price.product]) pricesByProduct[price.product] = [];
-        pricesByProduct[price.product].push(price);
-      }
-    });
-
-    // Map Stripe products to the format expected by ProductList
-    const items = filteredProducts.map((product) => {
-      // Determine a category from metadata or name fallback
-      let categoryId = product.metadata.category || 'Other';
-      let nameStr = product.name;
-      const nameLower = nameStr.toLowerCase();
-      
-      // Request #3: remove 'HEAT' from the title of transfer tape
-      if (nameLower.includes('transfer tape')) {
-        nameStr = nameStr.replace(/heat\s+/i, '').replace(/Heat\s+/i, '');
-        categoryId = 'Transfer Tape';
-      }
-
-      if (categoryId === 'Other') {
-        if (nameLower.includes('vinyl')) categoryId = 'Die-Cut Vinyl';
-        else if (nameLower.includes('tape')) categoryId = 'Transfer Tape';
-        else if (nameLower.includes('laminate')) categoryId = 'Laminate';
-        else if (nameLower.includes('banner') || nameLower.includes('paper')) categoryId = 'Banner Material';
-      }
-
-      if (nameLower.includes('magnet')) {
-        categoryId = 'Magnet Material';
-      }
-
-      if (categoryId === 'Printable Media') {
-        categoryId = 'Banner Material';
-      }
-
-      if (nameLower.includes('7504')) {
-        categoryId = 'Banner Material';
-      }
-
-      if (categoryId === 'Other') {
-        categoryId = 'Printable Media';
-      }
-
-      // Map all active prices to options
-      const productPrices = pricesByProduct[product.id] || [];
-      const deduplicatedOptions: Record<string, any> = {};
-      
-      productPrices.forEach(price => {
-        const sizeStr = price.nickname || price.metadata.size || 'Standard Roll';
-        // Keep the lowest active price for a given size string
-        const priceValue = price.unit_amount ? (price.unit_amount / 100) : 0;
-        if (!deduplicatedOptions[sizeStr] || deduplicatedOptions[sizeStr].price > priceValue) {
-          deduplicatedOptions[sizeStr] = {
-            size: sizeStr,
-            price: priceValue,
-            stripePriceId: price.id,
-          };
-        }
-      });
-
-      const options = Object.values(deduplicatedOptions).sort((a, b) => a.price - b.price); // Sort sizes by price low to high
-
-      // Fallback if no prices
-      if (options.length === 0) {
-        options.push({
-          size: 'Standard Roll',
-          price: 0,
-          stripePriceId: null
-        });
-      }
-
-      return {
-        id: product.id,
-        categoryId: categoryId,
-        name: nameStr,
-        description: product.description || '',
-        photo: product.images[0] || '/placeholder-product.jpg',
-        options: options,
-        status: options.every(o => o.price === 0) ? 'OUT OF STOCK' : undefined,
-      };
-    });
-
-    return NextResponse.json({ items });
-  } catch (error: any) {
-    console.error('Error fetching Stripe catalog:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch catalog from Stripe', details: error.message },
-      { status: 500 }
-    );
   }
+
+  return NextResponse.json({
+    items: [
+      {
+        ...DIGITAL_PRODUCT,
+        options: [
+          {
+            size: "Digital PDF",
+            price: DIGITAL_PRODUCT.price,
+            stripePriceId: priceId,
+          },
+        ],
+      },
+    ],
+  });
 }
