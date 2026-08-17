@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 type ProductOption = {
   size: string;
   price: number;
+  stripePriceId?: string;
 };
 
 type ProductItem = {
@@ -20,6 +21,7 @@ type ProductItem = {
 type CartItem = {
   cartId: string;
   productId: string;
+  stripePriceId: string;
   name: string;
   size: string;
   price: number;
@@ -89,7 +91,13 @@ export default function ProductList({ items }: { items: ProductItem[] }) {
     const savedCart = localStorage.getItem('vision_graphics_cart_v2');
     if (savedCart) {
       try {
-        setCart(JSON.parse(savedCart));
+        const parsed = JSON.parse(savedCart);
+        // Filter out items missing stripePriceId (old cart format)
+        const validCart = parsed.filter((item: CartItem) => item.stripePriceId);
+        if (validCart.length !== parsed.length) {
+          console.warn('Some cart items were removed due to missing price data');
+        }
+        setCart(validCart);
       } catch (e) {
         console.error('Failed to parse cart', e);
       }
@@ -117,6 +125,7 @@ export default function ProductList({ items }: { items: ProductItem[] }) {
       return [...prev, { 
         cartId,
         productId: product.id,
+        stripePriceId: (option as any).stripePriceId || '',
         name: product.name,
         size: option.size,
         price: option.price,
@@ -157,7 +166,7 @@ export default function ProductList({ items }: { items: ProductItem[] }) {
       if (data.url) {
         window.location.href = data.url; // Redirect to Stripe
       } else {
-        alert('Checkout via Stripe requires product price IDs. (Currently mock setup).');
+        alert(data.error || 'Checkout failed. Please try again.');
         setIsCheckingOut(false);
       }
     } catch (err) {

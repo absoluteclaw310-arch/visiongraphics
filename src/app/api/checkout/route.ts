@@ -9,13 +9,17 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Cart is empty' }, { status: 400 });
     }
 
-    // Format items for Stripe Checkout
+    // Validate items have price IDs
+    const missingPriceIds = items.filter((item: any) => !item.stripePriceId && !item.priceId);
+    if (missingPriceIds.length > 0) {
+      return NextResponse.json({ 
+        error: 'Some items are missing price information. Please clear your cart and add items again.' 
+      }, { status: 400 });
+    }
+
+    // Format items for Stripe Checkout using existing Price IDs
     const lineItems = items.map((item: any) => ({
-      price_data: {
-        currency: 'usd',
-        product: item.id, // Using the existing Stripe product ID
-        unit_amount: Math.round(parseFloat(item.price) * 100),
-      },
+      price: item.stripePriceId || item.priceId,
       quantity: item.quantity,
     }));
 
@@ -24,7 +28,6 @@ export async function POST(req: Request) {
       payment_method_types: ['card'],
       line_items: lineItems,
       mode: 'payment',
-      // We will define these URLs later, falling back to homepage for now
       success_url: `${req.headers.get('origin')}/?success=true`,
       cancel_url: `${req.headers.get('origin')}/products?canceled=true`,
     });
