@@ -55,6 +55,13 @@ jobs:
           curl -sSL https://cli.runpod.net | bash
           runpodctl version
 
+      - name: Authenticate with RunPod
+        env:
+          RUNPOD_API_KEY: ${{ secrets.RUNPOD_API_KEY }}
+        run: |
+          echo "$RUNPOD_API_KEY" > ~/.runpod/config.toml
+          runpodctl user
+
       - name: Create serverless template
         env:
           RUNPOD_API_KEY: ${{ secrets.RUNPOD_API_KEY }}
